@@ -1,4 +1,4 @@
-from coffeescript.settings import COFFEESCRIPT_MTIME_DELAY
+from coffeescript.settings import COFFEESCRIPT_MTIME_DELAY, COFFEESCRIPT_CLUSTER
 from django.core.cache import cache
 from django.utils.encoding import smart_str
 from django.utils.hashcompat import md5_constructor
@@ -14,7 +14,11 @@ def get_hexdigest(plaintext, length=None):
 
 
 def get_cache_key(key):
-    return ("django_coffescript.%s.%s" % (socket.gethostname(), key))
+    if COFFEESCRIPT_CLUSTER:
+        cache_key = ("django_coffescript.cluster.%s" % (key))
+    else:
+        cache_key = ("django_coffescript.%s.%s" % (socket.gethostname(), key))
+    return cache_key
 
 
 def get_mtime_cachekey(filename):
