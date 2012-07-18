@@ -8,7 +8,7 @@ import logging
 import shlex
 import subprocess
 import os
-
+import datetime
 
 logger = logging.getLogger("coffeescript")
 register = Library()
@@ -66,7 +66,8 @@ def coffeescript(path):
 
     output_directory = os.path.join(STATIC_ROOT, COFFEESCRIPT_OUTPUT_DIR, os.path.dirname(path))
 
-    hashed_mtime = get_hashed_mtime(full_path)
+    hashed_mtime = str(datetime.datetime.now().date())
+    #get_hashed_mtime(full_path)
 
     if filename.endswith(".coffee"):
         base_filename = filename[:-7]
